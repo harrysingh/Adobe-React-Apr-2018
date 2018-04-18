@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React Intro</title>
+	<script src="react.js"></script>
+	<script src="react-dom.js"></script>
+	<script>
+		function onBtnRenderDOMClick(){
+			var divDOM = document.getElementById('div-dom');
+			divDOM.innerHTML = '<h1>Hello World!</h1>';
+		}
+
+		class FirstComponent extends React.Component{
+			render(){
+				return React.createElement('div', null, 
+						React.createElement('p', null, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos provident, qui amet voluptas nisi! Accusamus repellat non sequi doloremque atque quibusdam earum excepturi recusandae magnam sed rerum soluta asperiores, corrupti.'),
+						React.createElement('h1', null, Date())
+					);
+			}
+		}
+		function onBtnRenderReactClick(){
+			var divReact = document.getElementById('div-react');
+			ReactDOM.render(React.createElement(FirstComponent), divReact);
+		}
+
+		function init(){
+			document.getElementById('btnRenderDOM').addEventListener('click', onBtnRenderDOMClick);
+			document.getElementById('btnRenderReact').addEventListener('click', onBtnRenderReactClick);
+		}
+		window.addEventListener('DOMContentLoaded', init);
+	</script>
+</head>
+<body>
+	<input type="button" value="Render DOM" id="btnRenderDOM">
+	<input type="button" value="Render React" id="btnRenderReact">
+	<div id="div-dom"></div>
+	<div id="div-react"></div>
+</body>
+</html>
