@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React Intro</title>
+	<script src="react.js"></script>
+	<script src="react-dom.js"></script>
+	<script src="babel.min.js"></script>
+	<script type="text/babel">
+		class FirstComponent extends React.Component{
+			render(){
+				return (
+					<div>
+						<h1> 'Welcome to React.js!'</h1>
+						<hr/>
+						<div> 
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos provident, qui amet voluptas nisi! Accusamus repellat non sequi doloremque atque quibusdam earum excepturi recusandae magnam sed rerum soluta asperiores, corrupti.</p>
+							<h3>{Date()}</h3>
+						</div>
+					</div>
+				);
+			}
+		}
+		function init(){
+			var divReact = document.getElementById('app-root');
+			ReactDOM.render(React.createElement(FirstComponent), divReact);
+		}
+		//window.addEventListener('DOMContentLoaded', init);
+		init();
+	</script>
+</head>
+<body>
+	<div id="app-root"></div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React Intro</title>
+	<script src="react.js"></script>
+	<script src="react-dom.js"></script>
+	<script>
+		class FirstComponent extends React.Component{
+			render(){
+				return React.createElement('div', null,
+						React.createElement('h1', null, 'Welcome to React.js!'),
+						React.createElement('hr', null, null),
+						React.createElement('div', null, 
+							React.createElement('p', null, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos provident, qui amet voluptas nisi! Accusamus repellat non sequi doloremque atque quibusdam earum excepturi recusandae magnam sed rerum soluta asperiores, corrupti.'),
+							React.createElement('h3', null, Date())
+						)
+					);
+			}
+		}
+		function init(){
+			var divReact = document.getElementById('app-root');
+			ReactDOM.render(React.createElement(FirstComponent), divReact);
+		}
+		window.addEventListener('DOMContentLoaded', init);
+	</script>
+</head>
+<body>
+	<div id="app-root"></div>
+</body>
+</html>
