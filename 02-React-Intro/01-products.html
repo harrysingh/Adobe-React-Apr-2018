@@ -41,6 +41,7 @@
 						<hr/>
 						<label htmlFor="">Product Name :</label>
 						<input type="text" onChange={this.onTxtProductNameChange} />
+						<span>({this.state.newProductName.length})</span>
 						<input type="button" value="Add New" onClick={this.onAddNewClick}/>
 						<div>{this.state.products.length}</div>
 						<ol>
