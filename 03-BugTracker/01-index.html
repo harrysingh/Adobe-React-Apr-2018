@@ -91,6 +91,11 @@
 				this.triggerChange();
 			}
 
+			removeClosed(){
+				this.list = this.list.filter(bug => !bug.isClosed);
+				this.triggerChange();
+			}
+
 		}
 
 		class BugItem extends React.Component{
@@ -115,6 +120,23 @@
 			}
 		}
 
+		class BugList extends React.Component{
+			render(){
+				let { bugs } = this.props;
+				let bugItems = bugs.map((bug, index) => (
+					<BugItem key={index} bug={bug}></BugItem>
+				));
+				return(
+					<section className="list">
+						<ol>
+							{bugItems}
+						</ol>
+						<input type="button" value="Remove Closed" onClick={this.onRemoveClosedClick} />
+					</section>
+				)
+			}
+		}
+
 		class BugTracker extends React.Component{
 			
 			txtBugNameRef = React.createRef();
@@ -122,6 +144,7 @@
 			constructor(props){
 				super(props);
 				this.onAddNewClick = this.onAddNewClick.bind(this);
+				this.onRemoveClosedClick = this.onRemoveClosedClick.bind(this);
 				
 			}
 			onAddNewClick(){
@@ -129,15 +152,15 @@
 				this.props.model.addNew(newBugName);
 			}
 
-			
+			onRemoveClosedClick(){
+				this.props.model.removeClosed();
+			}
 
 			render(){
 				let { model } = this.props,
 					bugs = model.list;
 				
-				let bugItems = bugs.map((bug, index) => (
-					<BugItem key={index} bug={bug}></BugItem>
-				));
+				
 				return(
 					<div>
 						<BugStats bugs={bugs}></BugStats>
@@ -155,12 +178,7 @@
 							<input type="text" ref={this.txtBugNameRef} />
 							<input type="button" value="Add New" onClick={this.onAddNewClick}/>
 						</section>
-						<section className="list">
-							<ol>
-								{bugItems}
-							</ol>
-							<input type="button" value="Remove Closed" />
-						</section>
+						<BugList bugs={bugs}></BugList>
 					</div>
 				)
 			}
