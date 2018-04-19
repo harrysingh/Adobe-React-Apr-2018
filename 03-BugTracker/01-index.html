@@ -64,6 +64,19 @@
 			}
 		}
 
+		class Bug{
+			name  = '';
+			isClosed = false;
+
+			constructor(name){
+				this.name = name;
+			}
+
+			toggle(){
+				this.isClosed = !this.isClosed;
+			}
+		}
+
 		class BugsCollection extends EventEmitter{
 
 			list = [];
@@ -73,11 +86,35 @@
 			}
 
 			addNew(bugName){
-				this.list.push(bugName);
+				let newBug = new Bug(bugName);
+				this.list.push(newBug);
 				this.triggerChange();
 			}
 
 		}
+
+		class BugItem extends React.Component{
+			constructor(props){
+				super(props);
+				this.onBugNameClick = this.onBugNameClick.bind(this);
+			}
+			onBugNameClick(){
+				this.props.bug.toggle();
+			}
+			render(){
+				let { bug } = this.props;
+				return(
+					<li>
+						<span className="bugname" onClick={this.onBugNameClick}>
+							{bug.name}
+						</span>
+						<div>[ {bug.isClosed.toString()} ]</div>
+						<div className="datetime">[Created At]</div>
+					</li>
+				)
+			}
+		}
+
 		class BugTracker extends React.Component{
 			
 			txtBugNameRef = React.createRef();
@@ -85,21 +122,21 @@
 			constructor(props){
 				super(props);
 				this.onAddNewClick = this.onAddNewClick.bind(this);
+				
 			}
 			onAddNewClick(){
 				let newBugName = this.txtBugNameRef.current.value;
 				this.props.model.addNew(newBugName);
 			}
 
+			
+
 			render(){
 				let { model } = this.props,
 					bugs = model.list;
 				
 				let bugItems = bugs.map((bug, index) => (
-					<li key={index}>
-						<span className="bugname">{bug}</span>
-						<div className="datetime">[Created At]</div>
-					</li>
+					<BugItem key={index} bug={bug}></BugItem>
 				));
 				return(
 					<div>
@@ -142,7 +179,7 @@
 			}
 		}
 
-		let model = new BugsCollection();
+		window.model = new BugsCollection();
 
 		function renderApp(){
 			ReactDOM.render(<BugTracker model={model} />,
