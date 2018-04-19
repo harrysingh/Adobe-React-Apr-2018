@@ -25,6 +25,18 @@ var SM = (function(){
 		_listeners.forEach(listener => listener());
 	}
 
+
+	function bindActionCreators(actionCreators, dispatch){
+		var result = {};
+		for(let key in actionCreators){
+			result[key] = function(){
+				var action = actionCreators[key].apply(undefined, arguments);
+				dispatch(action);
+			}
+		}
+		return result;
+	}
+
 	function createStore(reducer){
 
 		_reducer = reducer;
@@ -37,7 +49,8 @@ var SM = (function(){
 		}
 	}
 	return {
-		createStore : createStore
+		createStore : createStore,
+		bindActionCreators : bindActionCreators
 	};
 
 })();
