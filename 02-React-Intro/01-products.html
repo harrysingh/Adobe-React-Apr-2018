@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Products</title>
+	<script src="react.js"></script>
+	<script src="react-dom.js"></script>
+	<script src="babel.min.js"></script>
+	<script type="text/babel">
+		class Products extends React.Component{
+			state = {
+				newProductName : '',
+				products : []
+			};
+
+			constructor(){
+				super();
+				this.onAddNewClick = this.onAddNewClick.bind(this);
+				this.onTxtProductNameChange = this.onTxtProductNameChange.bind(this);
+			}
+			onTxtProductNameChange(evt){
+				this.setState({newProductName : evt.target.value});
+			}
+			onAddNewClick(){
+				this.setState({products : [...this.state.products, this.state.newProductName]});
+			}
+			render(){
+				
+				let { products } = this.state;
+				/*
+				let productItems = [];
+				for(let index = 0, count = products.length; index < count; index++){
+					productItems.push(<li key={index}>{products[index]}</li>);
+				}
+				*/
+				let productItems = products.map((product,index) => (<li key={index}>{product}</li>));
+
+				return(
+					<div>
+						<h3>Products</h3>
+						<hr/>
+						<label htmlFor="">Product Name :</label>
+						<input type="text" onChange={this.onTxtProductNameChange} />
+						<input type="button" value="Add New" onClick={this.onAddNewClick}/>
+						<div>{this.state.products.length}</div>
+						<ol>
+							{productItems}
+						</ol>
+					</div>
+				)
+			}
+		}
+
+		ReactDOM.render(<Products />, 
+			document.getElementById('app-root'));
+	</script>
+</head>
+<body>
+	
+	<div id="app-root"></div>
+</body>
+</html>
