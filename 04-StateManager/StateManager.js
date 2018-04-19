@@ -2,6 +2,7 @@ var SM = (function(){
 
 	var _currentState = undefined,
 		_reducer = undefined,
+		_listeners = [],
 		_init_action = { type : '@@INIT_ACTION' };
 
 	function getState(){
@@ -38,5 +39,5 @@ var SM = (function(){
 	return {
 		createStore : createStore
 	};
-	
+
 })();
