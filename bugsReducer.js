@@ -8,3 +8,4 @@ function bugsReducer(currentState = [], action){
 	}
 	return currentState;
 }
+
