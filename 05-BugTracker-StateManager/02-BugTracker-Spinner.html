@@ -55,7 +55,7 @@
 	<script type="text/babel">
 		
 
-		class BugItem extends React.Component{
+		class BugItem extends React.PureComponent{
 			constructor(props){
 				super(props);
 			}
@@ -74,7 +74,7 @@
 			}
 		}
 
-		class BugList extends React.Component{
+		class BugList extends React.PureComponent{
 			render(){
 				let { bugs, toggle } = this.props;
 				let bugItems = bugs.map((bug, index) => (
@@ -91,7 +91,7 @@
 			}
 		}
 
-		class BugTracker extends React.Component{
+		class BugTracker extends React.PureComponent{
 			
 			render(){
 				let { model : bugs, addNew, toggle, removeClosed } = this.props;
@@ -118,7 +118,7 @@
 			</section>
 		);
 
-		class BugEdit extends React.Component{
+		class BugEdit extends React.PureComponent{
 			
 			txtBugNameRef = React.createRef();
 
@@ -141,7 +141,7 @@
 			}
 		}
 
-		class BugStats extends React.Component{
+		class BugStats extends React.PureComponent{
 			render(){
 				let { bugs } = this.props;
 				let closedCount = bugs.reduce((prevResult, bug) => bug.isClosed ? ++prevResult : prevResult, 0);

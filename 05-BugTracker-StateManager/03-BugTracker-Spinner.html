@@ -52,6 +52,7 @@
 	<script src="react-dom.js"></script>
 	<script src="babel.min.js"></script>
 	<script src="redux.js"></script>
+	<script src="react-redux.js"></script>
 	<script type="text/babel">
 		
 
@@ -218,25 +219,51 @@
 
 
 		window.store = Redux.createStore(rootReducer);
+		
+		//Spinner
+		function mapDispatchToSpinnerProps(dispatch){
+			let spinnerActions = Redux.bindActionCreators(spinnerActionCreators, dispatch);
+			return spinnerActions;
+		}
+		function mapStateToSpinnerProps(state){
+			return { value : state.spinnerData };
+		}
+
+		let ConnectedSpinner = ReactRedux.connect(mapStateToSpinnerProps, mapDispatchToSpinnerProps)(Spinner);
+		
+
+		//BugTracker
+
+		function mapDispatchToBugTrackerProps(dispatch){
+			let bugActions = Redux.bindActionCreators(bugActionCreators, dispatch);	
+			return bugActions;
+		}
+
+		function mapStateToBugTrackerProps(state){
+			let bugsData = state.bugsData,
+				value = state.spinnerData;
+			let bugs = bugsData.filter((bug,index) => index % 2 === value % 2);
+			return { model : bugs }
+		}
+
+		let ConnectedBugTracker = ReactRedux.connect(mapStateToBugTrackerProps, mapDispatchToBugTrackerProps)(BugTracker);
 
 		//creating action objects
-		let bugActions = Redux.bindActionCreators(bugActionCreators, store.dispatch);
-		let spinnerActions = Redux.bindActionCreators(spinnerActionCreators, store.dispatch);
+		
+		
 
-		function renderApp(){
-			let bugsData = store.getState().bugsData,
-				value = store.getState().spinnerData;
-			let bugs = bugsData.filter((bug,index) => index % 2 === value % 2);
-			ReactDOM.render(
+		
+			
+		ReactDOM.render(
+			<ReactRedux.Provider store={store}>
 				<div>
-					<Spinner {...{value, ...spinnerActions}}/>
+					<ConnectedSpinner />
 					<hr/>
-					<BugTracker model={bugs} {...bugActions} />
-				</div>,
-				document.getElementById('app-root'));
-		}
-		renderApp();
-		store.subscribe(renderApp);
+					<ConnectedBugTracker/>
+				</div>
+			</ReactRedux.Provider>,
+			document.getElementById('app-root'));
+		
 	</script>
 </head>
 <body>
