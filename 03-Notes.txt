@@ -1,0 +1,143 @@
+# Immutable.js: To make sure the reducer changes are immutable.
+
+The reducer function is kept in memory.
+It is strongly discouraged to maintain more than one store in the application. All the data displayed in the application is related in one way or another. No data in application can claim that it is independent of each other.
+There are no benefits on maintaining data in more than one store. We are only adding more complexity that way.
+We organize the data modelwise and not flow wise. (All functions related to Spinners and all functions related to BugTracking should be segregated into different functions ? )
+Redux is available in angular as well
+React-Redux gives two APIs:
+a) Connect API gives use for creating actions,extracting data and creating components. We pass this connected component to reach instead of creating our own component and passing in value and action as props
+b) Provider API -> use inside React Component and now we dont need to use renderApp function over and over again, the provider takes care of it. Provider get the complete state from the store and puts it as set state.
+
+Try to have the data at the store rather than the component, it is easier than having data at the component and later moving out to the store.
+Gmail UI is a nice template to develop UI from.
+JS does not support names params. (like in Python) . Hence order of params is imp.
+
+Tool that creates an application structure for us. We can use that tool to generate application foundation. 
+####
+
+create-react-app
+npm install create-react-app -g
+mkdir 06-bug-tracker-app
+create-react-app .
+
+
+package.json is the manifest file for your application. Contains all meta data for your application.
+Maintains two very important information:
+ -> scripts : Commands that can be executed on script base
+ -> Dependencies : Run time dependencies
+ -> Dev Dependencies : Dev depenecies (such as build and test)
+
+ All the dependencies are installed in node_module.
+ "start" and "test" are standard commands, eject and build are custom. Find start and test in npm (Press Enter)
+
+ Thats why use npm run start
+ Starting point of the application is src/index.js
+ In js we need to explicitely export components and import them wherever required (everything is prrivate by default)
+ Whatever we export from a js file is attached to an object first
+ If we use default export, then we dont need to use flower brackets{ }. Else we need to.
+
+ We can create a dedicated folder for all reducers.
+ If file name is index.js, we dont have to explicitely write the file name(just the folder)
+
+ Run npm install(or update) after installing any component(as installing component might uninstall some needed components)
+
+ 6 ways to solve async:
+ a. Callbacks
+ b. Events
+ c. Async Await
+ d. Promises
+ 2 more.
+
+Callback forces that if we are triggering the operation, we should be responsible for the result. It forces delegation to the caller which becomes difficult.
+
+We want to have flexibility that one components calls an async and other the other components recevies it.
+What is a promise ?
+Like Led based buzzer at food counter to let you know that food is ready.
+
+Consumer calls server
+Server immediately returns an object that is not the result. Says he is going to take some more time. But when the task is complete I will let you know. Just subscribe to the object that I returned at the start.
+The object is designed to hold the result of an async operation and give it to whoever is interested.
+Imp: The object is designed to hold the result of an async operation. When a new consumer subscribes even if the operation is completed, he will still get the result.
+Therefore, with promises, it doesn't matter when you subscribe, the object is therefore, is called as a promise object.
+
+The promise object exposes two objects.
+a. Then
+b. Catch
+Callbacks are passed to both.
+Then is called when op is successful
+Catch is called when op is failed
+
+A call to then or catch will return a promise, so we can chain the promises(aync ops) together.
+There is AJAX,etc that is used to do server communication
+But the library we use is axios which is a nodejs module. Its a promise based HTTP client
+
+use console.dir to inspect the object in js
+
+V. VImp!!! : Reducer is not the place where we write the logic. Actions is the place where we write the logic. Reducers job in only updating the application state.
+
+For server calls, we generally, make two dispatches, one to initiate server call, one to update the store when the server returns.
+Therefore, our action creator need not always return an action object,it might return a fuction iwth a dispatch
+Actions return functions to serve this called, these are called middleware. The middleware will make your dispatch available to your function. The middleware is called thunk.
+By default, action return objects, thunks returns a function.
+
+The order of calling.
+call dispatch with an action that returns a function; the function inside the action is executed ( somewhere , but where ? ) , and that execution will invoke a dispatch later when the server call returns.
+
+Maintain loading information in the store
+
+We use a library called enzyme for testing. It loads the component in the memory.And you can perform an assertion in the memory.
+Load it as shallow or load it as deep (actual DOM Nodes are created).
+Performing testing in javascript. 
+1. Need a lib to organize test cases (Jest gives APIs -> describe,it,expect)
+
+Think of describe as a test suite. A collection of test cases.
+"it" is one test case.
+expect is equivalent to performing assertion.
+
+describe('A Sample Suite', function() {
+	it('Should add two numbers', function(){
+	 // arrange
+	 //act
+	 //assert
+	 expect(result).toBe(expectedResult)
+	})
+})
+
+2. Need a lib to load doms in memory -> Enzyme
+
+
+3. Load test time dependencies -> ??
+
+Build:
+
+1. Es6 goes to es5 using babel
+2. Javascripts needs to be minified
+3. Javascripts need to be uglified
+4. bundle the code (Hard)
+		4.1 They need to be converted into a uniform representation
+		4.2 Create one js file
+
+1. SCSS or LESS have to converted into CSS
+2. CSS Minified
+3. Css Uglified
+4. Bundled
+
+HTML is minfied, but not uglified. Then the generated CSS and JS is linked to this HTML
+
+Grunt/Gulp is equivalent to maven. Grunt was file based. Gulp co-ordinated in in-memory stream
+For all web application, 80% of the tasks are common.
+So they created one tool, that does 80% of tasks by itself. It is called web-pack. The goal was to create a simple tool.
+The web-pack come with create-react-app for free.
+(NodeJs uses common js to support modules in projects)
+
+react-scripts eject
+create a build with
+npm run build
+If we want to configure the web-pack, we have to localise the library
+
+HomeWork -> Showing a message when the async operation is still going on.
+		 -> Create the bug tracker app with create-react-app
+		 -> Routing: Based on the URL, show and hide components
+
+# Router is not SEO Friendly.

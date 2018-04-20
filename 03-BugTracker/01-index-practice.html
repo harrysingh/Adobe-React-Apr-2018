@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bug Tracker</title>
+	<script type="text/usecases">
+		1. Add new bugs
+		2. List the bugs
+		3. Toggle the 'closed' status of any bug
+		4. Remove closed bugs
+		5. Display stats (# of closed bugs / total # of bugs)
+		6. Sort the bugs
+		7. Persist the bugs in the server
+	</script>
+	<style>
+		body{
+			margin-left: 50px;
+		}
+		section{
+			margin-bottom: 10px;
+		}
+		.stats, .bugname{
+			font-size: 18pt;
+		}
+		.bugname{
+			cursor : pointer;
+		}
+		.closed{
+			color : red;
+			text-decoration: line-through;
+			font-style: italic;
+			font-weight: bold;
+		}
+		.list > ol{
+			list-style: none;
+			-webkit-padding-start : 0;
+			width:  500px
+		}
+
+		.list > ol > li {
+			margin-bottom: 10px;
+			border: 1px solid gray;
+			background-color: #e7e7e7;
+			padding: 10px;
+			border-radius: 5px;
+		}
+		.datetime{
+			font-style: italic;
+		}
+	</style>
+	<script src="react.js"></script>
+	<script src="react-dom.js"></script>
+	<script src="babel.min.js"></script>
+	<script type="text/babel">
+		class BugTracker extends React.Component {
+            state = {
+				newBugName : '',
+				bugs : []
+			};
+
+			constructor(){
+				super();
+				this.onAddNewClick = this.onAddNewClick.bind(this);
+				this.onTxtBugNameChange = this.onTxtBugNameChange.bind(this);
+			}
+			onTxtBugNameChange(evt){
+				this.setState({newBugName : evt.target.value});
+			}
+			onAddNewClick(){
+				this.setState({bugs : [...this.state.bugs, this.state.newBugName]});
+			}
+
+			render() {
+                let { bugs } = this.state;
+				let bugItems = bugs.map((bug,index) => (<li><span className="bugname" key={index}>{bug}</span><div className="datetime">[Created At]</div></li>));
+
+				return(
+				<div>
+					<section className="stats">
+						<span className="closed">1</span>
+						<span> / </span>
+						<span>2</span>
+					</section>
+					<section className="sort">
+						<label htmlFor="">Order By :</label>
+						<select name="" id="">
+							<option value=""></option>
+							<option value=""></option>
+						</select>
+						<label htmlFor="">Descending ? :</label>
+						<input type="checkbox" name="" id="" />
+					</section>
+					<section className="edit">
+						<label htmlFor="">Bug Name :</label>
+						<input type="text" name="" id="" onChange={this.onTxtBugNameChange} />
+						<input type="button" value="Add New" onClick={this.onAddNewClick} />
+					</section>
+					<section className="list">
+						<ol>
+							{bugItems}
+						</ol>
+						<input type="button" value="Remove Closed" />
+					</section>
+				</div>
+				);
+			}
+		}
+
+		function renderApp(){
+			ReactDOM.render(<BugTracker />, document.getElementById('bug-tracker-container'));
+		}
+		renderApp();
+	</script>
+</head>
+<body>
+	<h1>Bug Tracker</h1>
+	<hr />
+	<div id="bug-tracker-container"></div>
+</body>
+</html>

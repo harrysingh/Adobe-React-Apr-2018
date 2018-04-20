@@ -1,0 +1,152 @@
+tkmangesh77@gamil.com
+99019-11221
+
+# Babel
+
+# ES6 constructs
+
+## Use let
+
+## Constants const pi = 3.14
+
+## Array destructuring
+### let numbers = [1,2,3,4]; let [x, y] = numbers;
+
+## Rest Operator
+### let [x, y, ...z ] = numbers;
+
+## Spread Operator: Both arrays and Objects
+### let newNumbers = [...numbers, 10, 20, 30]
+### add(...numbers)
+### let newObject = { ...emp, newProperty: 1 }
+
+## Default Values for function arguments
+
+## Arrow Functions
+### Function as function expression instead of statement.
+### var add = (x, y) => { 
+  console.log(First statement);
+  return x + y;
+ }
+### var add = (x, y) => x + y;
+
+### Array Methods
+#### filter
+#### map
+#### reduce
+#### forEach
+
+## Template Strings
+### You can use template variables using ` before a variable.
+
+## Class
+### class Employee {
+  constructor: function(id) {
+    this.id = id;
+  }
+}
+
+## Inheritance
+### class FTE extends Employee {
+	consturct: function(id, benfits) {
+	  super(id);
+	  this.benfits = benefits;
+	}
+}
+
+## http://es6-features.org
+
+
+
+From Saurabh
+Babel.js(transpiler) -> transpiles esx to es5
+
+
+ESX Features:
+
+1. Variable Declarations (Is js we do it using var, but here the variable is not block scope, there for for(var i) declares i for the rest of the code)
+ Issue: Variable Hoisting
+
+Declare a variable using let makes it block scoped. Therefore, only use let, and hence, better than var declaration.
+
+2. Consts are same
+
+3. Array dereferencing
+var numbers = [2,5,7,4,9]
+var [x, y] = numbers
+O/P: x=2, y=5
+No need to use temp variables to swap
+[x,y] = [y,x]
+
+4. Rest Operator (LHS) / Spread Operator(RHS)
+[x,y,...z] = numbers
+z = (Array containing remaining values) 
+
+var numbers = [2,5,7,4,9]
+undefined
+var [x,y, ...z] = numbers
+undefined
+z
+(3) [7, 4, 9]
+var newNumbers = [...numbers,10,20,30]
+undefined
+newNumbers
+(8) [2, 5, 7, 4, 9, 10, 20, 30]
+﻿
+5. Default Operators (Same as python)
+
+​6. Arrow Functions
+var add = (x,y) => { return x+y; }
+add(1,2)
+3
+
+var staionaryProducts = products.filter(function(product){return product.vategory == 'stationary'})
+console.table(stationaryProducts)
+
+Study 4 methods of an array:
+a. Filter
+b. Map
+c. Reduce
+d. forEach
+
+7. Template strings
+
+var s= `Value of x is ${x} and value of y is ${y}`
+undefined
+s
+"Value of x is 10 and value of y is 20"
+
+You can use template variables within backquotes(below ESC key)
+
+8. Classes
+
+class Employee {
+	constructor(id,name,salary){
+		this.id=id;
+		this.name=name;
+    }
+	display(){
+		console.log(`id = ${this.id}`)
+    }
+}
+VM112:1 Uncaught SyntaxError: Identifier 'Employee' has already been declared
+    at <anonymous>:1:1
+typeof Employee
+"function"
+
+Its still a function
+
+http://es6-features.org (Its a good website!!)
+
+
+
+Notes: typeof command gives the type of any created variable. Read about creating refs in React. Refs are used as hook to elements in VDOM
+Class level variables have to be defined without let
+Let is only for local variables
+
+diff bw js and jsx:
+
+class changes to className is JSX
+for changes to htmlFor
+every tag has to be a closed tag
+React component is a view

@@ -1,0 +1,37 @@
+Go through the documentation of Component LifeCycle Events. One event is called render, other is component did mount etc.
+Avoid touching the DOM as much as possible
+Adding comments in return does not work
+At other places it does work
+Martin Fowler Books on Refactoring and Design Principles
+Consider maintainability over raw performance always, until we reach the performance baseline
+Code for maintainability, optimize for performance. 
+Maintainability cannot be optimized
+Design should always be that there is no communication between any child and parent components. 
+State and behaviour can be kept apart in JS and React (Functional Language)
+Type conversion does not matter in JS (since it is not a strongly typed language) JS is loosely typed
+​
+For whole application, maintain one container of the state. Call it a store. We have access to the data using a getState call.
+Behaviours(simple functions) which are called reducers. Reducers know how to act on a state. They know how to manipulate a state. 
+The reducer is given an action which tells the reducer to manipulate the store.
+
+The store has a subscriber which can be used to trigger state changes. The store manages the state
+The reducer is given the store.
+The store is made aware of the reducers.
+The store exhibits a method called dispatch where an actioan is sent as an argument. The store internally calls the reducer. 
+like --> reducer(currentState,action) 
+If the reducer is successful in performing an action, the new state is returned, else the current state is returned.
+This whole thing is the fundamental of Redux.
+
+This is needed because call passing between child/parent can be avoided in React using Redux
+
+Command Pattern: Encapsulate the request or action in an object.  
+
+Data Flow for a good UI:
+
+redux.js.org
+Give some data
+-> User interacts(Inside a Component) -> Component dispatches an action -> Goes to store -> State is changed -> UI is rerendered (This thing is known as Uni-direction data flow)
+A component can be just a function if it is not managing any state on its own
+
+For BugItem, now we can simply cascade action functions from top to bottom
+Imp: The store does only reference comparison, it does not check if the current state is modified, so always create a new object while writing reducers.
