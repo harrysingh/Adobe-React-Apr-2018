@@ -156,10 +156,7 @@
 			}
 		}
 
-		var init_bug_state = {
-			original_data : [],
-			actual
-		}
+		
 
 		function bugsReducer(currentState = [], action){
 			if (action.type === 'ADD_NEW'){
@@ -226,15 +223,18 @@
 		window.store = Redux.createStore(rootReducer);
 		
 		//Spinner
-		function mapDispatchToSpinnerProps(dispatch){
+		{/*function mapDispatchToSpinnerProps(dispatch){
 			let spinnerActions = Redux.bindActionCreators(spinnerActionCreators, dispatch);
 			return spinnerActions;
 		}
 		function mapStateToSpinnerProps(state){
 			return { value : state.spinnerData };
-		}
+		}*/}
 
-		let ConnectedSpinner = ReactRedux.connect(mapStateToSpinnerProps, mapDispatchToSpinnerProps)(Spinner);
+		let ConnectedSpinner = ReactRedux.connect(
+			(state) => ({value : state.spinnerData}),
+			(dispatch) => Redux.bindActionCreators(spinnerActionCreators, dispatch)
+		)(Spinner);
 		
 
 		//BugTracker
@@ -254,11 +254,6 @@
 		let ConnectedBugTracker = ReactRedux.connect(mapStateToBugTrackerProps, mapDispatchToBugTrackerProps)(BugTracker);
 
 		//creating action objects
-		
-		
-
-		
-			
 		ReactDOM.render(
 			<ReactRedux.Provider store={store}>
 				<div>
